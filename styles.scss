@@ -1,0 +1,194 @@
+/*-- scss:defaults --*/
+
+/* crema más oscuro tipo papel */
+$body-bg: #faf6ef;
+$body-color: #2a2a2a;
+
+/* acentos naranja suave */
+$link-color: #c46a2c;
+$link-hover-color: #9f5322;
+
+$accent-soft: #e6a77a;
+
+$code-bg: #fdf1e6;
+$code-color: #8f4a1f;
+
+$border-soft: #e8d8c9;
+
+
+/*-- scss:rules --*/
+
+/* layout más tipo libro */
+body {
+  font-family: "EB Garamond", Garamond, serif;
+  font-size: 20px;
+  line-height: 1.75;
+  margin: auto;
+  padding: 2rem;
+}
+
+/* mejor espaciado de párrafos */
+p {
+  margin-top: 0.9rem;
+  margin-bottom: 0.9rem;
+}
+
+/* títulos estilo editorial */
+h1, h2, h3 {
+  color: #7a4a2a;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  margin-top: 2.2rem;
+  margin-bottom: 0.8rem;
+}
+
+h1 {
+  font-size: 2.2rem;
+}
+
+h2 {
+  font-size: 1.6rem;
+}
+
+h3 {
+  font-size: 1.3rem;
+}
+
+/* enlaces */
+a {
+  text-decoration: none;       /* quita subrayado */
+  color: #c46a2c;              /* naranja suave */
+  font-weight: 500;            /* ligeramente más destacado */
+}
+
+a:hover {
+  color: #9f5322;              /* naranja más oscuro al pasar el ratón */
+}
+
+/* código en bloque */
+pre {
+  background: #fdf1e6;
+  border: 1px solid #e8d8c9;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* código inline */
+code {
+  background: #fde9da;
+  color: #8f4a1f;
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  font-size: 0.95em;
+}
+
+/* blockquotes elegantes */
+blockquote {
+  border-left: 4px solid $accent-soft;
+  padding-left: 1rem;
+  color: #444;
+  margin: 1.5rem 0;
+}
+
+/* callouts tipo nota */
+.callout-note {
+  background: #fdf3ea;
+  border-left: 4px solid $accent-soft;
+  border-radius: 6px;
+}
+
+/* tablas estilo paper */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.95em;
+}
+
+th {
+  text-align: left;
+  border-bottom: 2px solid $accent-soft;
+  padding: 0.55rem;
+}
+
+td {
+  border-bottom: 1px solid $border-soft;
+  padding: 0.55rem;
+}
+
+tr:nth-child(even) {
+  background: #fdf8f3;
+}
+
+/* figuras centradas estilo libro */
+figure {
+  margin: 2rem auto;
+  text-align: center;
+}
+
+figcaption {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 0.5rem;
+}
+
+/* ecuaciones con aire */
+.math.display {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* negrita con acento cálido */
+strong, b {
+  color: #7a4a2a;
+  font-weight: 600;
+}
+
+/* cajas visuales más editoriales */
+
+.callout {
+  border-radius: 10px;
+  padding: 1.1rem 1.2rem;
+  margin: 1.6rem 0;
+  border-left: 6px solid;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.04);
+}
+
+/* nota */
+.callout-note {
+  background: #fdf3ea;
+  border-color: #e6a77a;
+}
+
+/* consejo */
+.callout-tip {
+  background: #f3f7f4;
+  border-color: #7fa68a;
+}
+
+/* advertencia */
+.callout-warning {
+  background: #fff6e8;
+  border-color: #e4a33c;
+}
+
+/* importante */
+.callout-important {
+  background: #f7ecec;
+  border-color: #c96b6b;
+}
+
+/* título del callout */
+.callout-title {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.4rem;
+}
+
+/* icono más suave */
+.callout-icon {
+  opacity: 0.7;
+}

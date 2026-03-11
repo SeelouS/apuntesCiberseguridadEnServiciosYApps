@@ -1,0 +1,31 @@
+---
+title: "Fundamentos de Seguridad."
+format: html
+---
+
+## 1. Introducción.
+
+### 1.1. Seguridad de la información: Conceptos.
+
+### 1.2. Ciclo de vida de la Seguridad.
+
+### 1.3. Modelo básico de escenario de Seguridad.
+
+### 1.4. Ataques básicos.
+
+## 2. Servicios y mecanismos de Seguridad.
+
+### 2.1. Las cinco categorías fundamentales.
+
+#### 2.1.1. Confidencialidad.
+
+#### 2.1.2. Integridad.
+
+#### 2.1.3. Autenticidad.
+
+#### 2.1.4. Autenticación (Control de Acceso).
+
+#### 2.1.5. No repudio.
+
+### 2.2. Jerarquía (Servicios, Protocolos, Mecanismos, Técnicas, etc.)
+

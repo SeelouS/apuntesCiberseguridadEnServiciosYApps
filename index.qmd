@@ -1,0 +1,65 @@
+# Introducción {.unnumbered}
+
+Estos son los apuntes de la asignatura *Ciberseguridad en Servicios y Aplicaciones*, impartida por la Universidad de Málaga.
+
+En esta página se proporcionará un breve resumen del contenido de cada tema.
+
+---
+
+# 1. Fundamentos de Seguridad.
+
+En este tema se repasan los **conceptos básicos** que rodean la ciberseguridad. El índice de este tema:
+
+- Introducción.
+  - Seguridad de la información: Conceptos.
+  - Ciclo de vida de la Seguridad.
+  - Modelo básico de **escenario de Seguridad**.
+    - Ataques básicos.
+- Servicios y mecanismos de Seguridad.
+  - Las **cinco categorías fundamentales**.
+    - Confidencialidad.
+    - Integridad.
+    - Autenticidad
+    - Autenticación (Control de Acceso).
+    - No repudio.
+  - Jerarquía (Servicios, Protocolos, Mecanismos, Técnicas, etc.)
+  
+---
+
+# 2. Técnicas Criptográficas Básicas y servicios de seguridad asociados.
+
+En este tema se estudian las diferentes técnicas criptográficas básicas (**Clásicas, Simétricas y Asimétricas**), además de otros servicios asociados, como las **funciones HASH** o las funciones MAC. El índice es el siguiente:
+
+- Criptografía clásica.
+  - Cifrado por sustitución y transposición. Ejemplos.
+  - Cifrado Producto.
+  - Cifrado Vernman (**one-time-pad**).
+- Algoritmos simétricos (clave **privada**).
+  - Fundamentos.
+  - Algoritmo DES.
+  - Algoritmo triple-DES.
+  - Otros algoritmos simétricos.
+  - Modos de operación para algoritmos simétricos.
+  - Ventajas y desventajas de los algoritmos simétricos.
+- Algoritmos asimétricos (clave **pública**)
+  - Cifrado / Descifrado.
+  - Firma digital.
+  - Intercambio de claves.
+  - Algoritmo de Diffie-Hellman.
+  - Algoritmo RSA.
+- Otras **primitivas criptográficas**.
+  - Funciones HASH.
+  - Códigos de autenticación de mensajes.
+
+---
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,72 @@
+---
+title: "Técnicas Criptográficas Básicas y servicios de seguridad asociados."
+format: html
+---
+## 0. Introducción.
+
+Como se vio en el [Tema 1](./Tema1.html), un **algoritmo de cifrado** es uno de los mecanismos **fundamentales** para implementar servicios de seguridad.
+
+Algunos conceptos básicos:
+
+- **Criptografía:** Ciencia que estudia cómo mantener los **mensajes seguros**, usando entre otras cosas los algoritmos de cifrado.
+- **Criptoanálisis:** Ciencia que estudia cómo **romper** los mensajes cifrados.
+- **Criptología:** Criptografía + Criptoanálisis
+
+Un algoritmo de **cifrado** que transforma un mensaje en algo **ininteligible**. Busca garantizar la ***confidencialidad***.
+
+A su vez, un algoritmo de **descifrado** hace lo inverso, transforma un texto cifrado en texto en **claro**.
+
+:::{.callout-important title="Notación."}
+La función de cifrado se denota como ***E***, la de descifrado como ***D***; el mensaje en claro se representa con ***M***, mientras que el texto cifrado es *C*.
+:::
+ 
+## 1. Criptografía clásica.
+
+### 1.1. Cifrado por sustitución y transposición. Ejemplos.
+
+### 1.2. Cifrado Producto.
+
+### 1.3. Cifrado Vernman (one-time-pad).
+
+## 2. Algoritmos simétricos (clave privada).
+
+### 2.1. Fundamentos.
+
+### 2.2. Algoritmo DES.
+
+### 2.3. Algoritmo triple-DES.
+
+### 2.4. Otros algoritmos simétricos.
+
+### 2.5. Modos de operación para algoritmos simétricos.
+
+### 2.6. Ventajas y desventajas de los algoritmos simétricos.
+
+## 3. Algoritmos asimétricos (clave pública).
+
+### 3.1. Cifrado / Descifrado.
+
+### 3.2. Firma digital.
+
+### 3.3. Intercambio de claves.
+
+### 3.4. Algoritmo de Diffie-Hellman.
+
+### 3.5. Algoritmo RSA.
+
+## 4. Otras primitivas criptográficas.
+
+### 4.1. Funciones HASH.
+
+### 4.2. Códigos de autenticación de mensajes.
+
+
+
+
+
+
+
+
+
+
+

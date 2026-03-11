@@ -1,0 +1,18 @@
+project:
+  type: book
+
+book:
+  title: "Ciberseguridad en Servicios y Aplicaciones."
+  author: "Sergio Escalante Presa"
+  chapters:
+    - index.qmd
+    - Tema1.qmd
+    - Tema2.qmd
+
+number-sections: false
+bibliography: references.bib
+
+format:
+  html:
+    theme:
+      - styles.scss
