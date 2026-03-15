@@ -6,11 +6,18 @@ format: html
 
 Como se vio en el [Tema 1](./Tema1.html), un **algoritmo de cifrado** es uno de los mecanismos **fundamentales** para implementar servicios de seguridad.
 
-Algunos conceptos básicos:
+:::{.callout-tip title="Definición."}
+**Criptografía:** Ciencia que estudia cómo mantener los **mensajes seguros**, usando entre otras cosas los algoritmos de cifrado.
+:::
 
-- **Criptografía:** Ciencia que estudia cómo mantener los **mensajes seguros**, usando entre otras cosas los algoritmos de cifrado.
-- **Criptoanálisis:** Ciencia que estudia cómo **romper** los mensajes cifrados.
-- **Criptología:** Criptografía + Criptoanálisis
+:::{.callout-tip title="Definición."}
+**Criptoanálisis:** Ciencia que estudia cómo **romper** los mensajes cifrados.
+:::
+
+:::{.callout-tip title="Definición."}
+**Criptología:** Criptografía + Criptoanálisis
+:::
+
 
 Un algoritmo de **cifrado** que transforma un mensaje en algo **ininteligible**. Busca garantizar la ***confidencialidad***.
 
@@ -19,10 +26,61 @@ A su vez, un algoritmo de **descifrado** hace lo inverso, transforma un texto ci
 :::{.callout-important title="Notación."}
 La función de cifrado se denota como ***E***, la de descifrado como ***D***; el mensaje en claro se representa con ***M***, mientras que el texto cifrado es *C*.
 :::
- 
+
+Además, se cumple lo siguiente:
+
+$$
+\begin{align}
+E(M) &= C \\
+D(C) &= M \\
+D[E(M)] &= M
+\end{align}
+$$
+
+---
+
 ## 1. Criptografía clásica.
 
+Antiguamente, la criptografía se basaba en algoritmos basados en **caracteres**. Concretamente, estos algoritmos **sustituían** o **transponían** caracteres.
+
 ### 1.1. Cifrado por sustitución y transposición. Ejemplos.
+
+:::{.callout-tip title="Definición."}
+**Cifrado por sustitución: **Cada carácter del mensaje se sustituye por otro carácter en el texto cifrado.
+:::
+
+:::{.callout-tip title="Definición."}
+**Cifrado por transposición: **Se *permutan* las posiciones que ocupan los símbolos del mensaje.
+:::
+
+#### a) Cifrado por sustitución Caesar.
+
+Una única transformación. Se desplaza el alfabeto para obtener el alfabeto cifrado. Por ejemplo, si desplazamos el alfabeto 3 posiciones, la *A* original será una *D*, la *B* una *E*, y así.
+
+**Ejemplo:** Si movemos el alfabeto 3 posiciones, la palabra `HOLA` pasará a ser `KRÑD`.
+
+**Problema:**Le damos **ventaja al criptoanalista**. La frecuencia de aparición de las letras no es la misma para todas. 
+
+#### b) Cifrado por sustitución homofónico.
+
+Asignamos a un símbolo del alfabeto del mensaje, varios símbolos del alfabeto cifrado (proporcional a la frecuencia que dicho símbolo aparezca en el mensaje). Al haber una correspondencia **uno a muchos**, solventamos el problema de la frecuencia de las letras.
+
+**Problema: **Varios criptogramas pueden ser, en realidad, el mismo mensaje.
+
+#### c) Cifrado por sustitución polialfabética.
+
+Usas **varios alfabetos** para cifrar el mensaje, y vas cambiando entre ellos según ciertas *reglas*. 
+
+**Ejemplo:** tienes un alfabeto para las posiciones pares del mensaje y otro alfabeto para las posiciones impares del texto.
+
+#### d) Cifrado sencillo por transposición
+
+#### e) Cifrado por transposición con clave.
+
+#### f) Cifrado por transposición Railfence.
+
+#### g) Métodos polialfabéticos y nomenclátores.
+
 
 ### 1.2. Cifrado Producto.
 
