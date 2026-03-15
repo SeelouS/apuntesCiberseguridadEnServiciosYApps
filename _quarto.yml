@@ -16,3 +16,10 @@ format:
   html:
     theme:
       - styles.scss
+      
+  pdf:
+    documentclass: book
+    pdf-engine: lualatex
+    toc: true
+    toc-depth: 3
+    number-sections: false

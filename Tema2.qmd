@@ -1,5 +1,5 @@
 ---
-title: "Técnicas Criptográficas Básicas y servicios de seguridad asociados."
+title: "Técnicas Criptográficas Básicas."
 format: html
 ---
 ## 0. Introducción.
@@ -29,13 +29,11 @@ La función de cifrado se denota como ***E***, la de descifrado como ***D***; el
 
 Además, se cumple lo siguiente:
 
-$$
-\begin{align}
-E(M) &= C \\
-D(C) &= M \\
-D[E(M)] &= M
-\end{align}
-$$
+$E(M) = C$
+
+$D(C) = M$
+
+$D[E(M)] = M$
 
 ---
 
@@ -73,50 +71,293 @@ Usas **varios alfabetos** para cifrar el mensaje, y vas cambiando entre ellos se
 
 **Ejemplo:** tienes un alfabeto para las posiciones pares del mensaje y otro alfabeto para las posiciones impares del texto.
 
-#### d) Cifrado sencillo por transposición
+#### d) Cifrado sencillo por transposición.
+
+Es la forma más simple de transposición: se divide el texto en claro en **filas**, y **se leen como columnas**.
 
 #### e) Cifrado por transposición con clave.
 
+Una manera de **complicar** la técnica anterior. El tamaño de la **clave** nos va a indicar el **número de columnas** que ha de tener cada fila.
+
+Así, a la hora de **cifrar**, podemos hacerlo en base a ciertas **condiciones.** Por ejemplo, si la clave es *secreto*, cogemos las columnas por orden alfabético (primero la *c*, después la *e*, etc.).
+
 #### f) Cifrado por transposición Railfence.
+
+Consiste en:
+
+1. Escribir el texto **diagonalmente** con una profundidad *p*.
+1. Se escribe el criptograma leyendo las **filas**.
+
+**Ejemplo:** De *HOLA A TODOS* (y profundidad 4), obtendríamos:
+
+```
+H     O
+ O   T D
+  L A   O
+   A     S
+```
+Y el mensaje cifrado sería: *HOOTDLAOAS*
 
 #### g) Métodos polialfabéticos y nomenclátores.
 
+Para complicar más el cifrado, se puede usar el **disco de Alberti** junto con nomenclátores.
+
+:::{.callout-tip title="Definición."}
+**Nomenclátores: **Asociar códigos específicos a ciertas palabras.
+:::
+
+Cada **diez** letras descifradas, el disco **exterior** se gira dos posiciones en **sentido horario**.
+
+El disco de Alberti no tiene *u*, así que se identifica con una *v*.
+
+Para poder descifrar, necesitamos saber el **estado inicial del disco** con el que se cifró el mensaje original.
 
 ### 1.2. Cifrado Producto.
 
-### 1.3. Cifrado Vernman (one-time-pad).
+Combina tanto sustitución como transposición. En realidad, se puede ver como la aplicación sucesiva de varios cifrados. Es decir:
 
-## 2. Algoritmos simétricos (clave privada).
+$$
+E = E_1 \cdot E_2 \cdot \ldots \cdot E_r
+$$
 
-### 2.1. Fundamentos.
+$$
+E(M) = E_1(E_2(\cdots(E_r(M))\cdots))
+$$
 
-### 2.2. Algoritmo DES.
+Luego el descifrado sería:
 
-### 2.3. Algoritmo triple-DES.
+$$
+D = D_r \cdot D_{r-1} \cdot \ldots \cdot D_1
+$$
 
-### 2.4. Otros algoritmos simétricos.
+$$
+M = D(C) = D_r(D_{r-1}(\cdots(D_1(C))\cdots))
+$$
 
-### 2.5. Modos de operación para algoritmos simétricos.
+Gracias a esto, obtenemos un sistema de cifrado complejos, **seguros**, difíciles de atacar y fácilmente trasladables a un ordenador, a partir de **sistemas bastante sencillos**.
 
-### 2.6. Ventajas y desventajas de los algoritmos simétricos.
+### 1.3. Cifrado Vernam (one-time-pad).
 
-## 3. Algoritmos asimétricos (clave pública).
+Es una variante del cifrado **OTP** (one-time-pad)
 
-### 3.1. Cifrado / Descifrado.
+:::{.callout-tip title="Definición."}
+Un **one-time-pad** es un conjunto **infinito y no repetitivo** de letras **aleatorias**.
+:::
 
-### 3.2. Firma digital.
+Cada letra del *pad* se usa para cifrar una única letra del texto en claro, aplicando también módulo *n* (longitud del alfabeto).
 
-### 3.3. Intercambio de claves.
+En los **ordenadores**, se hace un *XOR* entre el mensaje en claro y la clave.
 
-### 3.4. Algoritmo de Diffie-Hellman.
+El cifrado Vernam presenta algunos inconvenientes:
 
-### 3.5. Algoritmo RSA.
+- Hay que generar las letras del OTP de una manera **aleatoria**.
+- El OTP es de **un solo uso**.
 
-## 4. Otras primitivas criptográficas.
+---
 
-### 4.1. Funciones HASH.
+## 2. Algoritmos simétricos (clave **privada**)
 
-### 4.2. Códigos de autenticación de mensajes.
+### 2.1. Fundamentos
+
+:::{.callout-tip title="Definición."} 
+Los **algoritmos simétricos** (o de clave secreta) son aquellos en los que se utiliza la misma clave ($K$) tanto para el proceso de cifrado como para el de descifrado, denominándose a esta clave **clave de sesión**. 
+:::
+
+:::{.callout-important title="Notación."} 
+- $M$: Mensaje en claro (Plaintext).
+- $C$: Criptograma o texto cifrado (Ciphertext).
+- $K$: Clave secreta compartida (donde $K = K^*$).
+- $E(M, K) = C$: Algoritmo de cifrado público.
+- $D(C, K) = M$: Algoritmo de descifrado público.
+:::
+
+La base de estos sistemas recae en el **segundo principio de Kerckhoffs**: *"El sistema no debe requerir ser secreto y debe poder caer en manos del enemigo sin inconvenientes"*. Por tanto, la seguridad depende estrictamente de que el emisor y el receptor mantengan en secreto la clave $K$.
+
+Existen dos maneras fundamentales de aplicar el cifrado:
+
+1. **Cifrado en bloques**: El algoritmo necesita procesar el mensaje $M$ fragmentándolo en bloques de tamaño fijo ($n$ bits). El cifrado se produce cuando el bloque de datos se entremezcla con los datos de la clave mediante operaciones matemáticas (comúnmente la operación lógica XOR) y permutaciones.
+1. **Cifrado en flujo**: El mensaje se procesa bit a bit. Cada bit del mensaje se somete a una operación XOR con el bit correspondiente de un flujo de clave (keystream) generado a partir de una clave inicial $K$ (semilla). 
+
+Para generar estos elementos pseudoaleatorios, se usan:
+
+- **TRNG (True Random Number Generator)**: Toma valores del entorno físico del hardware.
+- **PRNG (Pseudorandom Number Generator)**: Produce una secuencia abierta desde una semilla determinista.
+- **PRF (Pseudorandom Function)**: Produce una cadena pseudoaleatoria de bits de longitud fija (usado para generar subclaves).
+
+**El efecto avalancha** (basado en la teoría de Shannon de 1949):
+Para que un algoritmo sea seguro, debe cumplir con las propiedades de **difusión** (cada carácter cifrado depende de múltiples partes de la clave) y **confusión** (relación compleja entre criptograma y clave, logrado mediante permutaciones). Esto genera el *efecto avalancha*: un pequeño cambio en el texto claro o en la clave produce un cambio masivo (estadísticamente significativo) en el criptograma, imposibilitando reducir el espacio de búsqueda.
+
+### 2.2. Algoritmo DES
+
+:::{.callout-tip title="Definición."} 
+El **Data Encryption Standard (DES)** es un algoritmo histórico simétrico de cifrado en bloque desarrollado por IBM (basado en el algoritmo Lucifer) estandarizado por el NIST. Utiliza bloques de 64 bits y una técnica interna conocida como **red de Feistel**.
+:::
+
+- **Estructura**: La red de Feistel en DES somete al bloque de datos a **16 etapas o rondas** de operaciones iterativas (expansión, permutación, sustitución y operación XOR).
+- **Clave**: Recibe una clave de 64 bits, pero el último bit de cada octeto se usa como paridad. Por lo tanto, la longitud efectiva es de **56 bits**.
+- **Subclaves**: En cada una de las 16 rondas, se aplica una subclave de 48 bits generada por un algoritmo interno a partir de la semilla original de 56 bits.
+- **Seguridad**: Su clave de 56 bits (espacio de $2^{56}$ claves alternativas) es demasiado corta frente al poder computacional actual, haciéndolo vulnerable a un ataque exhaustivo (fuerza bruta).
+
+### 2.3. Algoritmo triple-DES
+
+:::{.callout-tip title="Definición."} 
+El **Triple-DES (3DES)** es un modo de utilizar el algoritmo DES que consiste en aplicar una secuencia de tres operaciones DES consecutivas por cada bloque de datos, contrarrestando la escasa longitud de clave del DES original.
+:::
+
+Existen dos variantes:
+- **Con 3 claves distintas**: Se usan $K_1, K_2, K_3$, logrando una longitud combinada de **168 bits**. Es la más segura y recomendada.
+- **Con 2 claves distintas**: Se utiliza $K_1 = K_3$. Ofrece 112 bits de longitud efectiva, pero ha sido objeto de diversos ataques teóricos.
+
+### 2.4. Otros algoritmos simétricos
+
+- **AES (Advanced Encryption Standard)**: Creado para sustituir a DES. Diseñado por Rijmen y Daemen (originalmente *Rijndael*). Opera con bloques de **128 bits** y longitudes de clave de **128, 192 o 256 bits**. No usa una red de Feistel, sino una red de **sustitución-permutación-operaciones aritméticas** en un campo finito. Aplica 10, 12 o 14 rondas según el tamaño de la clave. Actualmente es el estándar indiscutible.
+- **Blowfish**: Cifrado con clave variable (32 a 448 bits), aunque se recomienda usar más de 80 bits. Trabaja con bloques de 64 bits. Por su bloque pequeño, sólo se aconseja para uso heredado (*legacy*).
+- **Kasumi**: Clave de 128 bits y bloques de 64 bits. Se utiliza fundamentalmente en redes móviles (UMTS como UIA1, GSM como A5/3). 
+- **Camellia**: Soporta claves de 128, 192 y 256 bits y bloques de 128 bits. Presenta un rendimiento y robustez similar a AES. Es usado como alternativa segura en TLS.
+
+### 2.5. Modos de operación para algoritmos simétricos
+
+Los modos de operación definen cómo aplicar el cifrado a los bloques de datos múltiples:
+- **ECB (Electronic Codebook)**: Cada bloque se cifra independientemente con la misma clave. Deja expuestos patrones de datos (ej. al cifrar una imagen, el contorno sigue siendo visible).
+- **CBC (Cipher Block Chaining)**: Cada bloque en claro se combina mediante XOR con el criptograma del bloque anterior antes de ser cifrado, requiriendo un vector de inicialización (IV) para el primero. Destruye los patrones visuales.
+- **CFB (Cipher Feedback)** y **OFB (Output Feedback)**: Modos que permiten que un cifrador por bloques actúe como un cifrador en flujo.
+- **CTR (Counter)**: Transforma un cifrado de bloque en un cifrado de flujo combinando mediante XOR un contador incremental cifrado con el texto claro.
+- **GCM (Galois-CTR)**: Variante moderna de CTR muy eficiente. Usa MAC de Carter-Wegman en un campo de Galois para proporcionar confidencialidad y, además, **integridad**. Es ampliamente soportado en TLS 1.3.
+
+*Regla general recomendada:* Longitud mínima de clave y de bloque de $\ge 128 \text{ bits}$, y cambiar la clave (*rekeying*) tras cifrar $2^{n/2}$ bloques.
+
+### 2.6. Ventajas y desventajas de los algoritmos simétricos
+
+**Ventajas:**
+- Alto rendimiento y bajo coste computacional (cientos de MB/s en hardware, decenas de MB/s en software).
+- Los algoritmos son más simples matemáticamente y requieren recursos menores.
+- Pueden componerse para generar cifrados más fuertes o usarse para construir generadores pseudoaleatorios y funciones Hash.
+
+**Desventajas:**
+- Claves inherentemente más cortas y susceptibles a ataques de fuerza bruta si no se actualizan.
+- Requieren de **acuerdo previo de la clave**: Alice y Bob deben intercambiar $K$ por un canal seguro físicamente, lo cual es ineficiente si están lejanos.
+- **Mala escalabilidad**: En un sistema de $n$ usuarios, se requieren $\frac{n \times (n-1)}{2}$ claves separadas.
+- Necesitan de una tercera parte de confianza (administrador de claves) en grandes infraestructuras.
+
+---
+
+## 3. Algoritmos asimétricos (clave **pública**)
+
+### 3.1. Cifrado / Descifrado
+
+:::{.callout-tip title="Definición."} 
+Los **algoritmos asimétricos** (inventados por Diffie, Hellman y Merkle en 1976) se basan en el uso de pares de claves matemáticamente relacionadas para cada usuario: una **clave pública** ($K_{pub}$) conocida por todos, y una **clave privada** ($K_{priv}$) custodiada celosamente por el propietario.
+:::
+
+La asimetría radica en que lo que se cifra con una clave **sólo puede descifrarse con la otra**.  
+Si Bob quiere asegurar la **confidencialidad** enviando un mensaje a Alice:
+1. Bob obtiene la clave pública de Alice (desde un directorio o *key-ring*).
+2. Bob cifra el mensaje con la $K_{pub\_alice}$.
+3. Sólo Alice, usando su $K_{priv\_alice}$, podrá recuperar el mensaje original.
+
+**Ventajas frente a la simétrica:**
+- No requiere el acuerdo físico de claves secretas a priori.
+- Escala de forma óptima: en una comunidad de $n$ usuarios, sólo existen $2n$ claves.
+- Es computacionalmente imposible derivar la clave privada a partir de la pública.
+
+**Desventajas:**
+- Exigen gran longitud de claves (ej. un mínimo recomendado de 2048 bits para RSA o 224 para Curva Elíptica).
+- Se basan en funciones matemáticas complejas (factorización, logaritmos discretos), lo que los hace **aproximadamente 1000 veces más lentos** que los simétricos.
+
+### 3.2. Firma digital
+
+La dualidad de los algoritmos asimétricos permite el servicio de **autenticación** e integridad (no repudio).
+Si Bob cifra un mensaje con su *propia* clave privada ($K_{priv\_bob}$), cualquiera podrá descifrarlo usando la $K_{pub\_bob}$. Sin embargo, dado que **solo Bob** posee la $K_{priv\_bob}$, cuando Alice descifra exitosamente el mensaje, queda matemáticamente garantizado que el mensaje proviene legítimamente de Bob y no de un impostor.
+
+### 3.3. Intercambio de claves
+
+Debido al paupérrimo rendimiento en procesamiento de datos extensos del criptosistema asimétrico, la solución moderna es la **criptografía híbrida**:
+1. Se utiliza el algoritmo asimétrico (ej. RSA o Diffie-Hellman) exclusivamente para transmitir de forma segura una clave de sesión simétrica generada aleatoriamente ($K_{AB}$).
+2. Se utiliza un algoritmo simétrico (ej. AES) cifrando con la clave $K_{AB}$ para proteger todo el mensaje.
+
+### 3.4. Algoritmo de Diffie-Hellman
+
+:::{.callout-tip title="Definición."} 
+El algoritmo de **Diffie-Hellman** (1976) es un protocolo diseñado específicamente para permitir a dos partes acordar e intercambiar una clave secreta a través de un canal de comunicaciones inseguro, basando su seguridad en la dificultad de computar **logaritmos discretos**. No sirve para cifrar mensajes ni firmar, sólo para acordar claves.
+:::
+
+:::{.callout-important title="Notación."} 
+- $q$: Un número primo muy grande (elemento público global).
+- $\alpha$: Raíz primitiva de $q$, donde $\alpha < q$ (elemento público global).
+- $X_A, X_B$: Claves privadas de los usuarios A y B, donde $X < q$.
+- $Y_A, Y_B$: Valores calculados y enviados públicamente.
+:::
+
+El proceso matemático de intercambio es:
+1. Alice calcula su valor público: $Y_A = \alpha^{X_A} \bmod q$ y se lo envía a Bob.
+2. Bob calcula su valor público: $Y_B = \alpha^{X_B} \bmod q$ y se lo envía a Alice.
+3. Alice computa la clave secreta combinada: $K = (Y_B)^{X_A} \bmod q$.
+4. Bob computa la clave secreta combinada: $K = (Y_A)^{X_B} \bmod q$.
+
+Ambos obtienen exactamente el mismo valor matemático:
+$$ K = \alpha^{X_A \times X_B} \bmod q $$
+
+### 3.5. Algoritmo RSA
+
+:::{.callout-tip title="Definición."} 
+Desarrollado en el MIT en 1977 por Rivest, Shamir y Adleman. Es el criptosistema asimétrico más versátil, ya que provee Cifrado, Firma Digital e Intercambio de claves. Basa su robustez en la extrema dificultad matemática de hallar la factorización en primos de números enteros gigantescos.
+:::
+
+**Generación de las claves RSA:**
+1. Seleccionar dos números primos grandes aleatorios $p$ y $q$.
+2. Calcular el módulo $n = p \times q$.
+3. Calcular la función indicatriz de Euler: $\varphi(n) = (p-1) \times (q-1)$.
+4. Elegir una clave pública $e$ (exponente) que sea primo relativo con $\varphi(n)$ (es decir, $mcd(e, \varphi(n)) = 1$) tal que $e < \varphi(n)$.
+5. Determinar la clave privada $d$ (inverso multiplicativo), que debe cumplir que $e \times d \equiv 1 \pmod{\varphi(n)}$.
+
+Para operar, los textos ($M$) se convierten a equivalentes numéricos decimales (ej. ASCII) divididos en trozos menores al módulo ($M < n$).
+- **Para cifrar:**
+$$ C = M^e \bmod n $$
+- **Para descifrar:**
+$$ M = C^d \bmod n $$
+
+---
+
+## 4. Otras **primitivas criptográficas**
+
+### 4.1. Funciones HASH
+
+:::{.callout-tip title="Definición."} 
+Una **función hash criptográfica** es una función unidireccional que acepta como entrada un bloque de información $M$ (la preimagen) de longitud variable y produce como salida un bloque o huella digital ($h$, *digest*) de longitud fija.
+:::
+
+Para ser criptográficamente robusta, debe cumplir que sea computacionalmente imposible:
+1. Encontrar $M$ a partir de $h$ (**unidireccionalidad**). Las funciones Hash NO pueden ser revertidas, por tanto no sirven para "cifrar/descifrar".
+2. Encontrar dos mensajes distintos $M$ y $M'$ que produzcan exactamente la misma salida $h$ (**resistencia a colisiones**).
+
+Al más mínimo cambio en el mensaje original (incluso 1 bit), como promedio, se modificará el 50% de los bits de salida (*efecto avalancha*). 
+
+La principal utilidad de una función Hash es aportar el **servicio de Integridad de Datos**. Si combinamos esto con la **Firma Digital** (Criptografía de Clave Pública), el emisor únicamente cifra el $H(M)$ en lugar de todo el documento, haciéndolo infinitamente más eficiente.
+
+**Algoritmos conocidos:**
+- **MD-5**: Produce 128 bits. Actualmente **insegura**; puede sufrir ataques de colisión en apenas segundos.
+- **SHA-1**: Produce 160 bits. Ampliamente usada en el pasado pero **rota y considerada insegura** (En 2017, un equipo de Google y CWI Amsterdam demostraron colisiones completas manipulando PDFs bajo el mismo Hash).
+- **SHA-2**: Familia actual estándar. Sus variantes principales procesan salidas de **224, 256, 384 y 512 bits** soportando mensajes enormes con bloques internos de procesamiento de 512 o 1024 bits. Segura para sistemas actuales, aunque requiere el truncamiento en algunas variantes más cortas.
+- **SHA-3**: Basado en el algoritmo *Keccak*. Creado no por una debilidad de SHA-2, sino como un respaldo estructural distinto (diseño tipo *esponja* en vez de familia MD-X). Genera salidas de 224 a 512 bits. Sin colisiones ni amenazas actuales.
+- **Whirlpool**: Función europea que produce 512 bits. Se diferencia por basarse en métodos de diseño parecidos al algoritmo AES, garantizando diversidad algorítmica.
+
+### 4.2. Códigos de autenticación de mensajes
+
+Las funciones Hash puras carecen de autenticación (cualquiera podría modificar el archivo en tránsito y recalcular su Hash). Para resolver esto existen los MAC.
+
+:::{.callout-tip title="Definición."} 
+Un **MAC (Message Authentication Code)**, también llamado checksum criptográfico, es una primitiva que toma como entrada el mensaje original $M$ e incorpora una clave secreta compartida $K$ para producir una huella de autenticación.
+:::
+
+:::{.callout-important title="Notación."} 
+$$ MAC = F_{MAC}(M, K) $$
+:::
+
+Alice enviará $M$ junto con el $MAC$. Al llegar a Bob, éste recalcula el MAC empleando la clave simétrica $K$ que comparte con Alice. Si el MAC coincide, se garantiza no solo la **integridad de los datos**, sino la **autenticación** en el origen del mensaje (Bob está seguro que fue Alice pues sólo ella tiene $K$).
+
+Pueden desarrollarse basándose en dos categorías:
+1. Basadas en funciones Hash: Ej. **HMAC** y UMAC.
+2. Basadas en algoritmos de cifrado en bloque: Ej. EMAC, CMAC, AMAC.
 
 
 
