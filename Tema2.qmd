@@ -39,16 +39,16 @@ $D[E(M)] = M$
 
 ## 1. Criptografía clásica.
 
-Antiguamente, la criptografía se basaba en algoritmos basados en **caracteres**. Concretamente, estos algoritmos **sustituían** o **transponían** caracteres.
+Antiguamente, la criptografía se basaba en algoritmos basados en **caracteres**. Concretamente, estos algoritmos **sustituían** o **trasponían** caracteres.
 
-### 1.1. Cifrado por sustitución y transposición. Ejemplos.
+### 1.1. Cifrado por sustitución y trasposición. Ejemplos.
 
 :::{.callout-tip title="Definición."}
 **Cifrado por sustitución: **Cada carácter del mensaje se sustituye por otro carácter en el texto cifrado.
 :::
 
 :::{.callout-tip title="Definición."}
-**Cifrado por transposición: **Se *permutan* las posiciones que ocupan los símbolos del mensaje.
+**Cifrado por trasposición: **Se *permutan* las posiciones que ocupan los símbolos del mensaje.
 :::
 
 #### a) Cifrado por sustitución Caesar.
@@ -134,7 +134,7 @@ $$
 M = D(C) = D_r(D_{r-1}(\cdots(D_1(C))\cdots))
 $$
 
-Gracias a esto, obtenemos un sistema de cifrado complejos, **seguros**, difíciles de atacar y fácilmente trasladables a un ordenador, a partir de **sistemas bastante sencillos**.
+Gracias a esto, obtenemos sistemas de cifrado complejos, **seguros**, difíciles de atacar y fácilmente trasladables a un ordenador, a partir de **sistemas bastante sencillos**.
 
 ### 1.3. Cifrado Vernam (one-time-pad).
 
